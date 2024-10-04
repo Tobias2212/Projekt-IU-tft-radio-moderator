@@ -7,9 +7,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -24,8 +21,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             TftradiomoderatorTheme {
                 Surface(
-                    modifier = Modifier.fillMaxSize()
-                    .statusBarsPadding(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .statusBarsPadding(),
                     color = MaterialTheme.colorScheme.background,
                 ) {
                     SongRequestView()
@@ -37,12 +35,9 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun SongRequestView(viewModel: SongRequestViewModel = viewModel()) {
-
-
-    val songRequests by viewModel.songRequests.collectAsState()
-
-    SongRequestList(songRequestList = songRequests)
+fun SongRequestView() {
+    val songRequestViewModel: SongRequestViewModel = viewModel()
+    SongRequestList(viewModel = songRequestViewModel)
 }
 
 

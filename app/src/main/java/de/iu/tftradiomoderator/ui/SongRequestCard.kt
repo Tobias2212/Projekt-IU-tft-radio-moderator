@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Card
@@ -34,7 +33,7 @@ fun SongRequestCard(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp) // Etwas Abstand zwischen den Cards, aber kleiner als vorher
+            .padding(vertical = 8.dp)
             .background (highlightColor)
             .height(160.dp),
         shape = MaterialTheme.shapes.medium,
@@ -56,7 +55,7 @@ fun SongRequestCard(
                 Title(text = title, modifier = Modifier.padding(vertical = 8.dp))
                 Interpret(text = interpret, modifier = Modifier.padding(vertical = 8.dp))
             }
-            Favorite(favoriteCount = favoriteCount)  // Lieblingsherz immer sichtbar
+            Favorite(favoriteCount = favoriteCount)
         }
     }
 }

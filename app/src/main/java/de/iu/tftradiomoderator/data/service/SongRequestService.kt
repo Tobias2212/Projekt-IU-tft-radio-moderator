@@ -11,19 +11,42 @@ class SongRequestService {
 
     suspend fun getLatestSongRequest(): SongRequest {
         // Simulation
-        i++
-        delay(1000L)
-        return SongRequest(
+
+        val newSong = SongRequest(
             title = "Song $i",
             interpret = "Neuer Interpret",
             album = "Neues Album",
             favoriteCount = (1..100).random()
-
         )
+        i++
+        delay(1000L)
+        addSongRequest(newSong)
+        return newSong
+
 
     }
+suspend fun getInitialSongRequestes(): List<SongRequest> {
+    var newSong = SongRequest(
+        title = "Song A",
+        interpret = "Interpret A",
+        album = "Album A",
+        favoriteCount = 100
+    )
+    addSongRequest(newSong)
+     newSong = SongRequest(
+        title = "Song B",
+        interpret = "Interpret C",
+        album = "Album D",
+        favoriteCount = 50
+    )
+    addSongRequest(newSong)
 
-    fun addSongRequest(newSong: SongRequest) {
+    return songRequestList
+}
+
+
+
+    private fun addSongRequest(newSong: SongRequest) {
         songRequestList.add(0, newSong)
 
        if (songRequestList.size > maxSongs) {

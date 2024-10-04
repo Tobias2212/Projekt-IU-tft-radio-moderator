@@ -9,28 +9,37 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class SongRequestViewModel : ViewModel() {
+internal class SongRequestViewModel : ViewModel() {
     private val songRequestService = SongRequestService()
 
-    private val _songRequests = MutableStateFlow<List<SongRequest>>(emptyList())
-    val songRequests: StateFlow<List<SongRequest>> = _songRequests
+    internal val _songRequests = MutableStateFlow<List<SongRequest>>(emptyList())
+    var songRequests: StateFlow<List<SongRequest>> = _songRequests
 
-    init {
+    fun getRequestList()
+    {
+        loadSongRequests()
+        _songRequests.value = songRequestService.getSongRequests().toList()
 
-        startPollingForNewRequests()
+
     }
+init {
+    startPollingForNewRequests()
+}
 
-    fun loadSongRequests() {
-        _songRequests.value = songRequestService.getSongRequests()
+    private fun loadSongRequests() {
+        viewModelScope.launch {
+
+           songRequestService.getInitialSongRequestes()
+
+        }
     }
 
     private fun startPollingForNewRequests() {
         viewModelScope.launch {
             while (true) {
-                val newSong = songRequestService.getLatestSongRequest()
-
-                songRequestService.addSongRequest(newSong)
+                songRequestService.getLatestSongRequest()
                 _songRequests.value = songRequestService.getSongRequests().toList()
+
 
                 delay(5000L)
             }
