@@ -35,7 +35,7 @@ fun SongRequestCard(
             .fillMaxWidth()
             .padding(vertical = 8.dp)
             .background (highlightColor)
-            .height(160.dp),
+            .height(120.dp),
         shape = MaterialTheme.shapes.medium,
 
     ) {
@@ -51,9 +51,9 @@ fun SongRequestCard(
                     .padding(horizontal = 16.dp)
                     .weight(1f)
             ) {
-                Album(text = album, modifier = Modifier.padding(vertical = 8.dp))
-                Title(text = title, modifier = Modifier.padding(vertical = 8.dp))
-                Interpret(text = interpret, modifier = Modifier.padding(vertical = 8.dp))
+                Album(text = album, modifier = Modifier)
+                Title(text = title, modifier = Modifier.padding(vertical = 10.dp))
+                Interpret(text = interpret, modifier = Modifier)
             }
             Favorite(favoriteCount = favoriteCount)
         }

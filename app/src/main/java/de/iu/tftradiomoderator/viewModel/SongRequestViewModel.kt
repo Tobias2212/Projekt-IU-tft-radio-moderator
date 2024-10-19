@@ -15,27 +15,27 @@ internal class SongRequestViewModel : ViewModel() {
     internal val _songRequests = MutableStateFlow<List<SongRequest>>(emptyList())
     var songRequests: StateFlow<List<SongRequest>> = _songRequests
 
-    fun getRequestList()
-    {
-        loadSongRequests()
-        _songRequests.value = songRequestService.getSongRequests().toList()
-
-
-    }
+//    fun getRequestList()
+//    {
+//        loadSongRequests()
+//        _songRequests.value = songRequestService.getSongRequests().toList()
+//
+//
+//    }
 init {
     startPollingForNewRequests()
 }
 
-    private fun loadSongRequests() {
-        viewModelScope.launch {
-
-           songRequestService.getInitialSongRequestes()
-
-        }
-    }
+//    private fun loadSongRequests() {
+//        viewModelScope.launch {
+//            songRequestService.getInitialSongRequestes()
+//
+//        }
+//    }
 
     private fun startPollingForNewRequests() {
         viewModelScope.launch {
+            songRequestService.getInitialSongRequestes()
             while (true) {
                 songRequestService.getLatestSongRequest()
                 _songRequests.value = songRequestService.getSongRequests().toList()
@@ -45,4 +45,8 @@ init {
             }
         }
     }
+
+
 }
+
+

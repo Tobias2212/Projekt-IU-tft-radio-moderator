@@ -31,13 +31,13 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-internal fun SongRequestList(viewModel:SongRequestViewModel) {
+internal fun SongRequestList(
+    viewModel: SongRequestViewModel,
+    modifier: Modifier = Modifier
+) {
     var prevFirstSong by remember { mutableStateOf<SongRequest?>(null) }
     var highlightedSong by remember { mutableStateOf<SongRequest?>(null) }
-    val songRequestList = viewModel.songRequests.collectAsState().value
-    LaunchedEffect(key1 = viewModel) {
-        viewModel.getRequestList()
-    }
+    val songRequestList by viewModel.songRequests.collectAsState()
 
     LaunchedEffect(songRequestList) {
         if (songRequestList.isNotEmpty()) {
@@ -46,22 +46,19 @@ internal fun SongRequestList(viewModel:SongRequestViewModel) {
                 prevFirstSong = firstSong
                 highlightedSong = firstSong
 
-
                 launch {
                     delay(1000L)
                     highlightedSong = null
-
                 }
             }
         }
     }
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = modifier
+            .fillMaxWidth()
             .padding(horizontal = 16.dp)
     ) {
-
         Text(
             text = "Songwünsche",
             style = MaterialTheme.typography.headlineMedium,
@@ -71,14 +68,14 @@ internal fun SongRequestList(viewModel:SongRequestViewModel) {
             )
         )
 
+
         LazyColumn {
             items(songRequestList) { song ->
                 val highlightColor = if (song == highlightedSong) Color.Red else Color.Transparent
 
-
                 AnimatedVisibility(
                     visible = true,
-                    enter = fadeIn() + slideInVertically(initialOffsetY = { -it }), // Slide-in von oben
+                    enter = fadeIn() + slideInVertically(initialOffsetY = { -it }),
                     exit = fadeOut() + slideOutVertically()
                 ) {
                     SongRequestCard(
@@ -89,7 +86,7 @@ internal fun SongRequestList(viewModel:SongRequestViewModel) {
                         highlightColor = highlightColor,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 8.dp)
+                            .padding(vertical = 0.dp)
                     )
                 }
             }

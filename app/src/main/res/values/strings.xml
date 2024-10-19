@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">tft.radio.moderator</string>
+    <string name="evaluation">Bewertungen:</string>
+    <string name="average_rating">Durchschnittliche Bewertung: %1$s</string>
+    <string name="current_moderator">Aktueller Moderator:</string>
 </resources>
