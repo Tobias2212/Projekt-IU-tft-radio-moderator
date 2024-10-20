@@ -8,6 +8,7 @@ import kotlinx.coroutines.launch
 import de.iu.tftradiomoderator.data.service.ModeratorService
 
 import de.iu.tftradiomoderator.data.objects.Rating
+import kotlinx.coroutines.delay
 
 class ModeratorViewModel : ViewModel() {
     private val moderatorService = ModeratorService()
@@ -15,7 +16,7 @@ class ModeratorViewModel : ViewModel() {
     private val _moderatorName = MutableStateFlow("Max Mustermann")
     val moderatorName: StateFlow<String> = _moderatorName
 
-    private val _averageRating = MutableStateFlow(4.5)
+    private val _averageRating = MutableStateFlow(0.0)
     val averageRating: StateFlow<Double> = _averageRating
 
     private val _ratings = MutableStateFlow<List<Rating>>(emptyList())
@@ -23,7 +24,8 @@ class ModeratorViewModel : ViewModel() {
 
     init {
         loadModeratorInfo()
-        loadRatings()
+        loadInitialRatings()
+        startPollingForNewRatings()
     }
 
     private fun loadModeratorInfo() {
@@ -34,10 +36,25 @@ class ModeratorViewModel : ViewModel() {
         }
     }
 
-    private fun loadRatings() {
+    private fun loadInitialRatings() {
         viewModelScope.launch {
-            val ratingsList = moderatorService.getRatings()
-            _ratings.value = ratingsList
+            _ratings.value = moderatorService.getInitialRatings()
+            updateAverageRating()
         }
+    }
+
+    private fun startPollingForNewRatings() {
+        viewModelScope.launch {
+            while (true) {
+                moderatorService.getLatestRating()
+                _ratings.value = moderatorService.getRatings().toList()
+                updateAverageRating()
+                delay(5000L)
+            }
+        }
+    }
+
+    private fun updateAverageRating() {
+        _averageRating.value = moderatorService.calculateAverageRating()
     }
 }

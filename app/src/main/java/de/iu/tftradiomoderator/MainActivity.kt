@@ -58,12 +58,12 @@ private fun MainScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        // Moderator-Informationen oben
+
         ModeratorInfoSection(viewModel = moderatorViewModel)
 
         Spacer(modifier = Modifier.height(0.dp))
 
-        // Liste der Wunschsongs mit Gewichtung
+
         SongRequestList(
             viewModel = songRequestViewModel,
             modifier = Modifier.weight(1f)
@@ -71,7 +71,7 @@ private fun MainScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Bewertungen unten
+
         RatingsSection(viewModel = moderatorViewModel)
     }
 }
