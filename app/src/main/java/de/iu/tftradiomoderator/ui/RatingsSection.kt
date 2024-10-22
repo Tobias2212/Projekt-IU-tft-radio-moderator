@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,28 +21,33 @@ import de.iu.tftradiomoderator.data.objects.RatingCard
 import de.iu.tftradiomoderator.viewModel.ModeratorViewModel
 
 @Composable
-fun RatingsSection(viewModel: ModeratorViewModel) {
+fun RatingsSection(viewModel: ModeratorViewModel,  modifier: Modifier = Modifier) {
     val ratings by viewModel.ratings.collectAsState()
 
-    Column(
-        modifier = Modifier.fillMaxWidth()
+
+
+
+    LazyColumn(
+        modifier = modifier
+            .fillMaxWidth()
 
     ) {
-        Text(
-            text = stringResource(R.string.evaluation),
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(horizontal = 16.dp)
-        )
+        item {
+            Text(
+                text = stringResource(R.string.evaluation),
+                style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
 
-        Spacer(modifier = Modifier.height(8.dp))
-
-
-        ratings.forEach { rating ->
-            RatingCard(rating = rating)
             Spacer(modifier = Modifier.height(8.dp))
+
+
+            ratings.forEach { rating ->
+                RatingCard(rating = rating)
+                Spacer(modifier = Modifier.height(8.dp))
+            }
         }
     }
-
 }
 
 @Preview(showBackground = true)

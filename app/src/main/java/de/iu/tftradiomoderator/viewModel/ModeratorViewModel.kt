@@ -24,8 +24,11 @@ class ModeratorViewModel : ViewModel() {
 
     init {
         loadModeratorInfo()
-        loadInitialRatings()
-        startPollingForNewRatings()
+
+        viewModelScope.launch {
+            loadInitialRatings()
+            startPollingForNewRatings()
+        }
     }
 
     private fun loadModeratorInfo() {
@@ -36,21 +39,21 @@ class ModeratorViewModel : ViewModel() {
         }
     }
 
-    private fun loadInitialRatings() {
-        viewModelScope.launch {
-            _ratings.value = moderatorService.getInitialRatings()
-            updateAverageRating()
-        }
+    private suspend fun loadInitialRatings() {
+
+        _ratings.value = moderatorService.getInitialRatings().toList()
+        updateAverageRating()
+
     }
 
-    private fun startPollingForNewRatings() {
-        viewModelScope.launch {
-            while (true) {
-                moderatorService.getLatestRating()
-                _ratings.value = moderatorService.getRatings().toList()
-                updateAverageRating()
-                delay(5000L)
-            }
+    private suspend fun startPollingForNewRatings() {
+
+
+        while (true) {
+            moderatorService.getLatestRating()
+            _ratings.value = moderatorService.getRatings().toList()
+            updateAverageRating()
+            delay(5000L)
         }
     }
 

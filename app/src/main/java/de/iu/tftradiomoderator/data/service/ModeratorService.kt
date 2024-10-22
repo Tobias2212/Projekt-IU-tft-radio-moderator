@@ -7,11 +7,11 @@ class ModeratorService {
 
 
         private val ratingsList = mutableListOf<Rating>()
-        private var ratingCounter = 1
+        private var ratingCounter = 3
 
 
         suspend fun getCurrentModerator(): Moderator {
-            delay(1000L) // Simulierte Netzwerkverzögerung
+            delay(1000L)
             return Moderator(
                 name = "Julia Schmidt",
                 averageRating = calculateAverageRating()
@@ -37,7 +37,7 @@ class ModeratorService {
 
 
             val newRating = Rating(
-                rating = (1..5).random() + listOf(0, 5).random(),
+                rating = (1..5).random() ,
                 comment = "Neue Bewertung $ratingCounter"
             )
             ratingCounter++
