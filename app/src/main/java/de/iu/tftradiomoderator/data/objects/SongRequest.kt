@@ -1,9 +1,13 @@
 package de.iu.tftradiomoderator.data.objects
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonProperty
+
+@JsonIgnoreProperties
 data class SongRequest(
-    val title: String,
-    val interpret: String,
-    val album: String,
-    val favoriteCount: Int
+    @JsonProperty("title") val title: String,
+    @JsonProperty("album") val album: String,
+    @JsonProperty("interpret") val interpret: String,
+    @JsonProperty("favoriteCount") val favoriteCount: Int
 
 )

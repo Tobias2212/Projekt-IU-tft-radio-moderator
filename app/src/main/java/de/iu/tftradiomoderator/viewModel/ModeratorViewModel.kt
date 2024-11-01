@@ -2,12 +2,11 @@ package de.iu.tftradiomoderator.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.iu.tftradiomoderator.data.service.ModeratorService
+import de.iu.tftradiomoderator.data.objects.Rating
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import de.iu.tftradiomoderator.data.service.ModeratorService
-
-import de.iu.tftradiomoderator.data.objects.Rating
 import kotlinx.coroutines.delay
 
 class ModeratorViewModel : ViewModel() {
@@ -24,40 +23,46 @@ class ModeratorViewModel : ViewModel() {
 
     init {
         loadModeratorInfo()
-
         viewModelScope.launch {
             loadInitialRatings()
             startPollingForNewRatings()
         }
     }
 
+    /**
+     * Lädt die aktuellen Moderatorinformationen aus dem Service.
+     */
     private fun loadModeratorInfo() {
         viewModelScope.launch {
-            val moderator = moderatorService.getCurrentModerator()
-            _moderatorName.value = moderator.name
-            _averageRating.value = moderator.averageRating
+            while (true) {
+                val moderator = moderatorService.getCurrentModerator()
+                _moderatorName.value = moderator.name
+                _averageRating.value = moderator.averageRating
+                delay(5000L)
+            }
+
+
+
         }
     }
 
+    /**
+     * Lädt die initialen Bewertungen aus dem Service.
+     */
     private suspend fun loadInitialRatings() {
-
-        _ratings.value = moderatorService.getInitialRatings().toList()
-        updateAverageRating()
-
+        _ratings.value = moderatorService.getInitialRatings()
+        _averageRating.value = moderatorService.calculateAverageRating()
     }
 
+    /**
+     * Startet das regelmäßige Abrufen neuer Bewertungen.
+     */
     private suspend fun startPollingForNewRatings() {
-
-
         while (true) {
-            moderatorService.getLatestRating()
-            _ratings.value = moderatorService.getRatings().toList()
-            updateAverageRating()
+
+            _ratings.value = moderatorService.getRatingsFromNetworkAndCache()
+            _averageRating.value = moderatorService.calculateAverageRating()
             delay(5000L)
         }
-    }
-
-    private fun updateAverageRating() {
-        _averageRating.value = moderatorService.calculateAverageRating()
     }
 }

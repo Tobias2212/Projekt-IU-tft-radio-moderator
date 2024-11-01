@@ -9,44 +9,31 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-internal class SongRequestViewModel : ViewModel() {
+class SongRequestViewModel : ViewModel() {
     private val songRequestService = SongRequestService()
+    val _songRequests = MutableStateFlow<List<SongRequest>>(emptyList())
+    val songRequests: StateFlow<List<SongRequest>> = _songRequests
 
-    internal val _songRequests = MutableStateFlow<List<SongRequest>>(emptyList())
-    var songRequests: StateFlow<List<SongRequest>> = _songRequests
+    init {
+        startPollingForNewRequests()
+    }
 
-//    fun getRequestList()
-//    {
-//        loadSongRequests()
-//        _songRequests.value = songRequestService.getSongRequests().toList()
-//
-//
-//    }
-init {
-    startPollingForNewRequests()
-}
-
-//    private fun loadSongRequests() {
-//        viewModelScope.launch {
-//            songRequestService.getInitialSongRequestes()
-//
-//        }
-//    }
 
     private fun startPollingForNewRequests() {
         viewModelScope.launch {
-            songRequestService.getInitialSongRequestes()
+
+            _songRequests.value = songRequestService.getInitialSongRequests()
+            delay(100)
+
             while (true) {
-                songRequestService.getLatestSongRequest()
-                _songRequests.value = songRequestService.getSongRequests().toList()
+               // val newRequest = songRequestService.getLatestSongRequest()
 
+                _songRequests.value = songRequestService.loadFromNetworkAndCache()
 
+                //  _songRequests.value = listOf(newRequest) + _songRequests.value
                 delay(5000L)
             }
         }
     }
-
-
 }
-
 

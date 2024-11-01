@@ -22,11 +22,13 @@ import androidx.compose.ui.unit.dp
 
 import androidx.compose.material.icons.outlined.StarBorder
 import androidx.compose.ui.Alignment
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonProperty
 
-
+@JsonIgnoreProperties
 data class Rating(
-    val rating: Int,
-    val comment: String
+    @JsonProperty("stars") val rating: Int,
+    @JsonProperty("comment")val comment: String
 )
 
 @Composable
@@ -57,6 +59,7 @@ fun RatingCard(rating: Rating) {
             )
         }
     }
+
 }
 
 @Composable

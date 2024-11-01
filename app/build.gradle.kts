@@ -50,7 +50,9 @@ android {
 }
 
 dependencies {
-
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.jackson)
+    implementation(libs.okhttp)
         implementation(libs.androidx.lifecycle.viewmodel.compose)
         implementation(libs.ui)
         implementation(libs.material3)
