@@ -26,11 +26,7 @@ class SongRequestViewModel : ViewModel() {
             delay(100)
 
             while (true) {
-               // val newRequest = songRequestService.getLatestSongRequest()
-
                 _songRequests.value = songRequestService.loadFromNetworkAndCache()
-
-                //  _songRequests.value = listOf(newRequest) + _songRequests.value
                 delay(5000L)
             }
         }

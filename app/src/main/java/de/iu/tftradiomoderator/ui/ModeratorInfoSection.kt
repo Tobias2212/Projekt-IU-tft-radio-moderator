@@ -19,7 +19,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.iu.tftradiomoderator.R
-import de.iu.tftradiomoderator.data.objects.StarRating
 import de.iu.tftradiomoderator.viewModel.ModeratorViewModel
 
 @Composable

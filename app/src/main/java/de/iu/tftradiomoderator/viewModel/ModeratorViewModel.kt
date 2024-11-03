@@ -3,7 +3,7 @@ package de.iu.tftradiomoderator.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.iu.tftradiomoderator.data.service.ModeratorService
-import de.iu.tftradiomoderator.data.objects.Rating
+import de.iu.tftradiomoderator.ui.Rating
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -29,9 +29,7 @@ class ModeratorViewModel : ViewModel() {
         }
     }
 
-    /**
-     * Lädt die aktuellen Moderatorinformationen aus dem Service.
-     */
+
     private fun loadModeratorInfo() {
         viewModelScope.launch {
             while (true) {
@@ -46,17 +44,12 @@ class ModeratorViewModel : ViewModel() {
         }
     }
 
-    /**
-     * Lädt die initialen Bewertungen aus dem Service.
-     */
+
     private suspend fun loadInitialRatings() {
         _ratings.value = moderatorService.getInitialRatings()
         _averageRating.value = moderatorService.calculateAverageRating()
     }
 
-    /**
-     * Startet das regelmäßige Abrufen neuer Bewertungen.
-     */
     private suspend fun startPollingForNewRatings() {
         while (true) {
 

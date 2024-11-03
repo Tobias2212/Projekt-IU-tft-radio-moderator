@@ -1,4 +1,4 @@
-package de.iu.tftradiomoderator.data.objects
+package de.iu.tftradiomoderator.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

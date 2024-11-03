@@ -1,6 +1,5 @@
 package de.iu.tftradiomoderator.ui
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,7 +16,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.iu.tftradiomoderator.R
-import de.iu.tftradiomoderator.data.objects.RatingCard
 import de.iu.tftradiomoderator.viewModel.ModeratorViewModel
 
 @Composable

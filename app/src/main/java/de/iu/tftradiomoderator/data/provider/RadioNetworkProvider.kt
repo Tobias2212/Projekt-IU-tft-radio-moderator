@@ -1,17 +1,13 @@
 package de.iu.tftradiomoderator.data.provider
 
-import android.provider.ContactsContract
-import android.provider.ContactsContract.RawContacts.Data
 import de.iu.tftradiomoderator.data.api.ApiService
 import de.iu.tftradiomoderator.data.error.NetworkException
 import de.iu.tftradiomoderator.data.objects.SongRequest
-import de.iu.tftradiomoderator.data.objects.Rating
+import de.iu.tftradiomoderator.ui.Rating
 import de.iu.tftradiomoderator.data.objects.Moderator
 import okhttp3.OkHttpClient
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
-import java.util.Objects
 import java.util.concurrent.TimeUnit
 import kotlin.jvm.Throws
 
@@ -24,7 +20,7 @@ class RadioNetworkProvider {
      */
     @Throws(NetworkException::class)
     private fun createApiService(): ApiService {
-        val baseUrl = "https://tft-radio.resources"
+        val baseUrl = "http://tft-radio.resources"
         return try {
             val client = OkHttpClient.Builder()
                 .connectTimeout(5, TimeUnit.SECONDS)
@@ -43,6 +39,7 @@ class RadioNetworkProvider {
                 .build()
                 .create(ApiService::class.java)
         } catch (e: Exception) {
+            println("Error creating API service: ${e.localizedMessage}")
             throw NetworkException("Error creating API service: ${e.localizedMessage}")
         }
     }
@@ -53,8 +50,10 @@ class RadioNetworkProvider {
     suspend fun getSongRequests(): List<SongRequest> {
         val response = apiService.getSongRequests()
         if (response.isSuccessful) {
+
             return response.body() ?: throw NetworkException("Keine Daten erhalten")
         } else {
+            println("Fehler beim Abrufen der Song Request-Liste: ${response.errorBody()?.string()}")
             throw NetworkException("Fehler beim Abrufen der Song Request-Liste")
         }
     }
@@ -64,11 +63,12 @@ class RadioNetworkProvider {
      * Moderatorinformationen abrufen.
      */
     suspend fun getModerator(): Moderator  {
-
+        println("Moderator: ${apiService.getModerator().body()}")
         val response = apiService.getModerator()
-        if (response.isSuccessful) {
+        if (response.isSuccessful) {     println("Antwort erhalten Moderator : ${response.body()}")
             return response.body() ?: throw NetworkException("Keine Daten erhalten")
         } else {
+            println("Fehler beim Abrufen der Moderators: ${response.errorBody()?.string()}")
             throw NetworkException("Fehler beim Abrufen der Rating-Liste")
         }
 
@@ -80,9 +80,9 @@ class RadioNetworkProvider {
      */
     suspend fun getRatings(): List<Rating> {
         val response = apiService.getRatings()
-        if (response.isSuccessful) {
+        if (response.isSuccessful) {     println("Antwort erhalten Rating: ${response.body()}")
             return response.body() ?: throw NetworkException("Keine Daten erhalten")
-        } else {
+        } else { println("Fehler beim Abrufen der Rating-Liste: ${response.errorBody()?.string()}")
             throw NetworkException("Fehler beim Abrufen der Rating-Liste")
         }
     }
