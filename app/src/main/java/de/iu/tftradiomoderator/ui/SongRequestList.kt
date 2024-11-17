@@ -38,7 +38,6 @@ internal fun SongRequestList(
     var prevFirstSong by remember { mutableStateOf<SongRequest?>(null) }
     var highlightedSong by remember { mutableStateOf<SongRequest?>(null) }
     val songRequestList by viewModel.songRequests.collectAsState()
-
     LaunchedEffect(songRequestList) {
         if (songRequestList.isNotEmpty()) {
             val firstSong = songRequestList.first()
@@ -53,7 +52,6 @@ internal fun SongRequestList(
             }
         }
     }
-
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -67,12 +65,9 @@ internal fun SongRequestList(
                 bottom = 8.dp
             )
         )
-
-
         LazyColumn {
             items(songRequestList) { song ->
                 val highlightColor = if (song == highlightedSong) Color.Red else Color.Transparent
-
                 AnimatedVisibility(
                     visible = true,
                     enter = fadeIn() + slideInVertically(initialOffsetY = { -it }),
@@ -96,7 +91,7 @@ internal fun SongRequestList(
 
 @Preview(showBackground = true)
 @Composable
-fun SongRequestListPreview() {
+private fun SongRequestListPreview() {
     val mockViewModel = SongRequestViewModel().apply {
         _songRequests.value = listOf(
             SongRequest("Song A", "Interpret A", "Album A", 5),

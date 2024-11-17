@@ -1,6 +1,6 @@
 package de.iu.tftradiomoderator.data.provider
 
-class RadioMemoryProvider<T> {
+internal class RadioMemoryProvider<T> {
 
     private var cache: T? = null
 
@@ -19,6 +19,5 @@ class RadioMemoryProvider<T> {
         println("Cache is being cleared.")
         cache = null
     }
-
 
 }

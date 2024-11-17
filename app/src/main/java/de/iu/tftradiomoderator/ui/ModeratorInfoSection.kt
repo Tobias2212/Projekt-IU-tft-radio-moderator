@@ -22,7 +22,7 @@ import de.iu.tftradiomoderator.R
 import de.iu.tftradiomoderator.viewModel.ModeratorViewModel
 
 @Composable
-fun ModeratorInfoSection(viewModel: ModeratorViewModel) {
+internal fun ModeratorInfoSection(viewModel: ModeratorViewModel) {
     val moderatorName by viewModel.moderatorName.collectAsState()
     val averageRating by viewModel.averageRating.collectAsState()
 
@@ -36,7 +36,6 @@ fun ModeratorInfoSection(viewModel: ModeratorViewModel) {
             style = MaterialTheme.typography.titleMedium,
            )
 
-
         Text(
             text = moderatorName,
             style = MaterialTheme.typography.headlineMedium
@@ -49,9 +48,7 @@ fun ModeratorInfoSection(viewModel: ModeratorViewModel) {
                 text = "(${String.format("%.1f", averageRating)} Sterne)",
                 style = MaterialTheme.typography.bodyLarge
             )
-
         }
-
     }
 }
 @Preview(showBackground = true)

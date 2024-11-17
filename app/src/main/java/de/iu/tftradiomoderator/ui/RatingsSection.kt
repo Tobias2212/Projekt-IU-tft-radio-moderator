@@ -19,16 +19,12 @@ import de.iu.tftradiomoderator.R
 import de.iu.tftradiomoderator.viewModel.ModeratorViewModel
 
 @Composable
-fun RatingsSection(viewModel: ModeratorViewModel,  modifier: Modifier = Modifier) {
+internal fun RatingsSection(viewModel: ModeratorViewModel,  modifier: Modifier = Modifier) {
     val ratings by viewModel.ratings.collectAsState()
-
-
-
 
     LazyColumn(
         modifier = modifier
             .fillMaxWidth()
-
     ) {
         item {
             Text(
@@ -36,10 +32,7 @@ fun RatingsSection(viewModel: ModeratorViewModel,  modifier: Modifier = Modifier
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
-
             Spacer(modifier = Modifier.height(8.dp))
-
-
             ratings.forEach { rating ->
                 RatingCard(rating = rating)
                 Spacer(modifier = Modifier.height(8.dp))

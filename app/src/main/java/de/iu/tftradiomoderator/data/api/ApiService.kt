@@ -6,7 +6,7 @@ import de.iu.tftradiomoderator.data.objects.Moderator
 import retrofit2.Response
 import retrofit2.http.GET
 
-interface ApiService {
+internal interface ApiService {
 
     @GET("/songRequests")
     suspend fun getSongRequests(): Response<List<SongRequest>>
@@ -16,6 +16,4 @@ interface ApiService {
 
     @GET("/ratings")
     suspend fun getRatings(): Response<List<Rating>>
-
-
 }

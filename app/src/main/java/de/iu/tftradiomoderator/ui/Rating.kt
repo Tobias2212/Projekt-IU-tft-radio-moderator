@@ -32,7 +32,7 @@ data class Rating(
 )
 
 @Composable
-fun RatingCard(rating: Rating) {
+internal fun RatingCard(rating: Rating) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(4.dp)
@@ -40,7 +40,6 @@ fun RatingCard(rating: Rating) {
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
-
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -52,18 +51,16 @@ fun RatingCard(rating: Rating) {
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
-
             Text(
                 text = rating.comment,
                 style = MaterialTheme.typography.bodyLarge
             )
         }
     }
-
 }
 
 @Composable
-fun StarRating(rating: Double, modifier: Modifier = Modifier) {
+internal fun StarRating(rating: Double, modifier: Modifier = Modifier) {
     Row(modifier = modifier) {
         val maxStars = 5
         val fullStars = rating.toInt()
@@ -86,7 +83,6 @@ fun StarRating(rating: Double, modifier: Modifier = Modifier) {
                 tint = Color.Yellow
             )
         }
-
 
         repeat(emptyStars) {
             Icon(
