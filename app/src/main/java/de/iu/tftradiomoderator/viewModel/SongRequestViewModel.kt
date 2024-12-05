@@ -3,7 +3,7 @@ package de.iu.tftradiomoderator.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.iu.tftradiomoderator.data.service.SongRequestService
-import de.iu.tftradiomoderator.data.objects.SongRequest
+import de.iu.tftradiomoderator.data.model.SongRequest
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

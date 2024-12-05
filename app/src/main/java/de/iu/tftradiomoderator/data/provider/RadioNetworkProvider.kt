@@ -3,9 +3,9 @@ package de.iu.tftradiomoderator.data.provider
 
 import de.iu.tftradiomoderator.data.error.NetworkException
 import de.iu.tftradiomoderator.data.api.ApiService
-import de.iu.tftradiomoderator.data.objects.SongRequest
+import de.iu.tftradiomoderator.data.model.SongRequest
 import de.iu.tftradiomoderator.ui.Rating
-import de.iu.tftradiomoderator.data.objects.Moderator
+import de.iu.tftradiomoderator.data.model.Moderator
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
@@ -13,9 +13,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.jvm.Throws
 
 internal class RadioNetworkProvider {
-
     private val apiService = createApiService()
-
     /**
      * Konfiguriert und erstellt die API-Service-Instanz.
      */
@@ -45,21 +43,14 @@ internal class RadioNetworkProvider {
             throw NetworkException()
         }
     }
-
     /**
      * Song Requests vom Server abrufen.
      */
     @Throws(NetworkException::class)
     suspend fun getSongRequests(): List<SongRequest> {
         val response = apiService.getSongRequests()
-        if (response.isSuccessful) {
-            return response.body() ?:  throw NetworkException()
-        } else {
-            println("Fehler beim Abrufen der Song Request-Liste: ${response.errorBody()?.string()}")
-            throw NetworkException()
-        }
+        return response.body() ?: throw NetworkException()
     }
-
 
     /**
      * Moderatorinformationen abrufen.
@@ -68,15 +59,8 @@ internal class RadioNetworkProvider {
     suspend fun getModerator(): Moderator  {
         println("Moderator: ${apiService.getModerator().body()}")
         val response = apiService.getModerator()
-        if (response.isSuccessful) {     println("Antwort erhalten Moderator : ${response.body()}")
-            return response.body() ?:  throw NetworkException()
-        } else {
-            println("Fehler beim Abrufen der Moderators: ${response.errorBody()?.string()}")
-            throw NetworkException()
-        }
-
+        return response.body() ?: throw NetworkException()
     }
-
 
     /**
      * Bewertungen des Moderators abrufen.
@@ -84,14 +68,7 @@ internal class RadioNetworkProvider {
     @Throws(NetworkException::class)
     suspend fun getRatings(): List<Rating> {
         val response = apiService.getRatings()
-        if (response.isSuccessful) {     println("Antwort erhalten Rating: ${response.body()}")
-            return response.body() ?:  throw NetworkException()
-        } else { println("Fehler beim Abrufen der Rating-Liste: ${response.errorBody()?.string()}")
-            throw NetworkException()
-        }
+        return response.body() ?: throw NetworkException()
     }
-
-
-
     }
 

@@ -19,7 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-
 import androidx.compose.material.icons.outlined.StarBorder
 import androidx.compose.ui.Alignment
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
@@ -66,7 +65,6 @@ internal fun StarRating(rating: Double, modifier: Modifier = Modifier) {
         val fullStars = rating.toInt()
         val hasHalfStar = (rating - fullStars) >= 0.5
         val emptyStars = maxStars - fullStars - if (hasHalfStar) 1 else 0
-
 
         repeat(fullStars) {
             Icon(
