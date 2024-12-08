@@ -19,7 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-
 import androidx.compose.material.icons.outlined.StarBorder
 import androidx.compose.ui.Alignment
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
@@ -32,7 +31,7 @@ data class Rating(
 )
 
 @Composable
-fun RatingCard(rating: Rating) {
+internal fun RatingCard(rating: Rating) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(4.dp)
@@ -40,7 +39,6 @@ fun RatingCard(rating: Rating) {
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
-
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -52,24 +50,21 @@ fun RatingCard(rating: Rating) {
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
-
             Text(
                 text = rating.comment,
                 style = MaterialTheme.typography.bodyLarge
             )
         }
     }
-
 }
 
 @Composable
-fun StarRating(rating: Double, modifier: Modifier = Modifier) {
+internal fun StarRating(rating: Double, modifier: Modifier = Modifier) {
     Row(modifier = modifier) {
         val maxStars = 5
         val fullStars = rating.toInt()
         val hasHalfStar = (rating - fullStars) >= 0.5
         val emptyStars = maxStars - fullStars - if (hasHalfStar) 1 else 0
-
 
         repeat(fullStars) {
             Icon(
@@ -86,7 +81,6 @@ fun StarRating(rating: Double, modifier: Modifier = Modifier) {
                 tint = Color.Yellow
             )
         }
-
 
         repeat(emptyStars) {
             Icon(

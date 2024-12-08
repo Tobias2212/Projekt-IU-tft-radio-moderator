@@ -6,7 +6,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -24,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import de.iu.tftradiomoderator.data.objects.SongRequest
+import de.iu.tftradiomoderator.data.model.SongRequest
 import de.iu.tftradiomoderator.viewModel.SongRequestViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -38,7 +37,6 @@ internal fun SongRequestList(
     var prevFirstSong by remember { mutableStateOf<SongRequest?>(null) }
     var highlightedSong by remember { mutableStateOf<SongRequest?>(null) }
     val songRequestList by viewModel.songRequests.collectAsState()
-
     LaunchedEffect(songRequestList) {
         if (songRequestList.isNotEmpty()) {
             val firstSong = songRequestList.first()
@@ -53,7 +51,6 @@ internal fun SongRequestList(
             }
         }
     }
-
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -67,12 +64,9 @@ internal fun SongRequestList(
                 bottom = 8.dp
             )
         )
-
-
         LazyColumn {
             items(songRequestList) { song ->
                 val highlightColor = if (song == highlightedSong) Color.Red else Color.Transparent
-
                 AnimatedVisibility(
                     visible = true,
                     enter = fadeIn() + slideInVertically(initialOffsetY = { -it }),
@@ -96,7 +90,7 @@ internal fun SongRequestList(
 
 @Preview(showBackground = true)
 @Composable
-fun SongRequestListPreview() {
+private fun SongRequestListPreview() {
     val mockViewModel = SongRequestViewModel().apply {
         _songRequests.value = listOf(
             SongRequest("Song A", "Interpret A", "Album A", 5),

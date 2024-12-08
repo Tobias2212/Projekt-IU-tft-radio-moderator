@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SongRequestCard(
+internal fun SongRequestCard(
     title: String,
     interpret: String,
     album: String,
@@ -61,7 +61,7 @@ fun SongRequestCard(
 }
 
 @Composable
-fun Favorite(favoriteCount: Int) {
+internal fun Favorite(favoriteCount: Int) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -76,23 +76,23 @@ fun Favorite(favoriteCount: Int) {
 }
 
 @Composable
-fun Album(text: String, modifier: Modifier) {
+internal fun Album(text: String, modifier: Modifier) {
     Text(text = text, style = MaterialTheme.typography.bodyLarge, modifier = modifier)
 }
 
 @Composable
-fun Title(text: String, modifier: Modifier) {
+internal fun Title(text: String, modifier: Modifier) {
     Text(text = text, style = MaterialTheme.typography.headlineMedium, modifier = modifier)
 }
 
 @Composable
-fun Interpret(text: String, modifier: Modifier) {
+internal fun Interpret(text: String, modifier: Modifier) {
     Text(text = text, style = MaterialTheme.typography.bodyLarge, modifier = modifier)
 }
 
 @Preview
 @Composable
-fun SongRequestCardPreview() {
+private fun SongRequestCardPreview() {
     SongRequestCard(
         title = "Beispiel Song",
         interpret = "Beispiel Interpret",
